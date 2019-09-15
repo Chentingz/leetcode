@@ -64,7 +64,37 @@
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        
+        int swapLastElementIndex = nums.size()-1;  //
+        for(int i=0; i<=swapLastElementIndex; ++i)
+        {
+            for(int j=i+1; j<=swapLastElementIndex; ++j) // 在除nums[i]的后续序列里查找重复项
+                if(nums[j] == nums[i]){
+                    swap(nums[j], nums[swapLastElementIndex--]);
+                    if(swapLastElementIndex != i && nums[swapLastElementIndex] == nums[i])
+                        swapLastElementIndex--;
+                }
+                    
+                    
+        } 
+        int length = swapLastElementIndex + 1;
+        sort(nums, length);
+        return length;
+    }
+    void swap(int& x, int& y){
+        if(x != y){
+            int tmp = x;
+            x = y;
+            y = tmp;
+        }
+    }
+    // 冒泡排序
+    void sort(vector<int>& nums, int size){
+        for(int i=1; i<size; ++i){
+            for(int j=0; j<size-i; ++j){
+                if(nums[j] > nums[j+1])
+                    swap(nums[j], nums[j+1]);
+            }
+        }
     }
 };
 
