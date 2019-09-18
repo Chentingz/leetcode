@@ -63,21 +63,26 @@
  */
 class Solution {
 public:
+    // 用最大值替代重复项，最后排序
     int removeDuplicates(vector<int>& nums) {
-        int swapLastElementIndex = nums.size()-1;  //
-        for(int i=0; i<=swapLastElementIndex; ++i)
-        {
-            for(int j=i+1; j<=swapLastElementIndex; ++j) // 在除nums[i]的后续序列里查找重复项
+        if(nums.size() == 0) return 0;
+        int numSize = nums.size();
+        //如Input:[1,1,1,1]
+        if(nums[0] == nums[numSize-1])  return 1;   
+        
+        int countDuplicates = 0;
+        for(int i=0; i<numSize; ++i) {
+            if(nums[i] == INT_MAX)
+                continue;
+            for(int j=i+1; j<numSize; ++j){// 在除nums[i]的后续序列里查找重复项
                 if(nums[j] == nums[i]){
-                    swap(nums[j], nums[swapLastElementIndex--]);
-                    if(swapLastElementIndex != i && nums[swapLastElementIndex] == nums[i])
-                        swapLastElementIndex--;
+                    nums[j] = INT_MAX;
+                    countDuplicates++;
                 }
-                    
-                    
+            } 
         } 
-        int length = swapLastElementIndex + 1;
-        sort(nums, length);
+        bubleSort(nums, nums.size());
+        int length = numSize - countDuplicates;
         return length;
     }
     void swap(int& x, int& y){
@@ -88,7 +93,7 @@ public:
         }
     }
     // 冒泡排序
-    void sort(vector<int>& nums, int size){
+    void bubleSort(vector<int>& nums, int size){
         for(int i=1; i<size; ++i){
             for(int j=0; j<size-i; ++j){
                 if(nums[j] > nums[j+1])
@@ -97,4 +102,54 @@ public:
         }
     }
 };
+
+// 有bug，如Input:[1,2,2,2]，Output:[1,2,2],Expected:[1,2]
+// 将序列分为已去重序列，和查找序列，在查找序列中查重复项，并和尾元素进行交换，同时调整子序列上界，最后对已去重序列进行排序 
+//class Solution {
+// public:
+//     int removeDuplicates(vector<int>& nums) {
+//         if(nums.size() == 0) return 0;
+//         int swapLastElementIndex = nums.size()-1;  //可交换的最后一个元素下标
+//         if(nums[0] == nums[swapLastElementIndex])
+//             swapLastElementIndex = 0;
+
+//         for(int i=0; i<=swapLastElementIndex; ++i) {
+//             for(int j=i+1; j<=swapLastElementIndex; ++j){// 在除nums[i]的后续序列里查找重复项
+//                 if(nums[j] == nums[i]){
+//                     if(nums[j] != nums[swapLastElementIndex])
+//                         swap(nums[j], nums[swapLastElementIndex]);
+//                     --swapLastElementIndex;
+//                 }
+//             } 
+               
+//         } 
+//         int length = swapLastElementIndex + 1;
+//         bubleSort(nums, length);
+//         return length;
+//     }
+//     void swap(int& x, int& y){
+//         if(x != y){
+//             int tmp = x;
+//             x = y;
+//             y = tmp;
+//         }
+//     }
+//     // 在j~swapLastElementIndex之间找到第一个nums[j]!=nums[swapLastElementIndex]，并交换元素；否则调整swapLastElementIndex下标
+//     void findPosToSwap(vector<int>& nums, int&j, int& swapLastElementIndex){
+//         while(nums[j]==nums[--swapLastElementIndex] && j !=swapLastElementIndex);
+//         if(j == swapLastElementIndex)   // 没有找到可以交换的位置
+//             swapLastElementIndex--;
+//         else
+//             swap(nums[j], nums[swapLastElementIndex--]);
+//     } 
+//     // 冒泡排序
+//     void bubleSort(vector<int>& nums, int size){
+//         for(int i=1; i<size; ++i){
+//             for(int j=0; j<size-i; ++j){
+//                 if(nums[j] > nums[j+1])
+//                     swap(nums[j], nums[j+1]);
+//             }
+//         }
+//     }
+// };
 
