@@ -65,7 +65,22 @@ class Solution {
 public:
     bool isValid(string s) {
         if(s.empty()) return true;
-        
+        if(s.size() == 1) return false;
+
+        stack<char> myStack;
+        int i=0;
+        while(i<s.size()){
+            if(myStack.empty())
+                myStack.push(s[i]);
+            else
+                isPaired(myStack.top(), s[i]) ? myStack.pop() : myStack.push(s[i]);
+            i++;
+        }
+        return myStack.empty() ? true : false;
+    }
+    bool isPaired(char x, char y){
+        map<char,char> pairTable = { {'(', ')'}, {'[', ']'}, {'{', '}'} };
+        return pairTable[x] == y ? true : false;
     }
 };
 
