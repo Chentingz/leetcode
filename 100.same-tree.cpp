@@ -78,15 +78,15 @@ public:
         if(p->val != q->val) return false;
 
         vector<int> traverseSeq1, traverseSeq2;
-        DFS(p,traverseSeq1);
-        DFS(q,traverseSeq2);
+        preorderTraversal(p,traverseSeq1);
+        preorderTraversal(q,traverseSeq2);
         return traverseSeq1 == traverseSeq2 ? true : false;
     }
-    void DFS(TreeNode* p,vector<int>& traverseSeq){
+    void preorderTraversal(TreeNode* p,vector<int>& traverseSeq){
         if(p){
             traverseSeq.push_back(p->val);
-            DFS(p->left, traverseSeq);
-            DFS(p->right, traverseSeq);
+            preorderTraversal(p->left, traverseSeq);
+            preorderTraversal(p->right, traverseSeq);
         }
         else{
             traverseSeq.push_back(INT_MIN);
