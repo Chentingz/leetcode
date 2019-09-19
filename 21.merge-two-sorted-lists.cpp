@@ -65,18 +65,9 @@ public:
         }
         if(l1Tmp == NULL)
             l3Tmp->next = l2Tmp;
-            // while(l2Tmp){
-            //     *l3Tmp->next = ListNode(l2Tmp->val);
-            //     l3Tmp = l3Tmp->next;
-            //     l2Tmp = l2Tmp->next;
-            // }
+
         if(l2Tmp == NULL)
             l3Tmp->next = l1Tmp;
-            // while(l1Tmp){
-            //     *l3Tmp->next = ListNode(l1Tmp->val);
-            //     l3Tmp = l3Tmp->next;
-            //     l1Tmp = l1Tmp->next;
-            // }
 
         return l3;
     }
